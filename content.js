@@ -68,7 +68,9 @@
   // Build prompt for video
   function buildPrompt(videoId) {
     const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    return `Please summarize this YouTube video: ${videoUrl}`;
+    return `${videoUrl}
+
+If the title is clickbait (a question or provocative statement designed to get clicks), first give a direct 1-2 sentence answer to that question. Then summarize the video.`;
   }
 
   // Open Gemini in new tab with prompt in URL hash

@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Gemini Summarizer",
+  "version": "1.0.0",
+  "description": "Add Summarize buttons to YouTube thumbnails that open Gemini chat for video summaries",
+  "permissions": ["activeTab"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "youtube-gemini-summarizer@example.com",
+      "strict_min_version": "109.0"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*", "https://youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["gemini-inject.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

@@ -1,9 +1,6 @@
 (function() {
   'use strict';
 
-  // Track processed thumbnails to avoid duplicates
-  const processedThumbnails = new WeakSet();
-
   // Popup state
   let popup = null;
   let currentVideoId = null;
@@ -310,9 +307,7 @@
 
   // Process a single video item
   function processVideoItem(item) {
-    if (processedThumbnails.has(item)) return;
-
-    // Check if button already exists
+    // Check if button already exists (more reliable than WeakSet for recycled elements)
     if (item.querySelector('.yt-gemini-btn-container')) return;
 
     // Find the video link
@@ -326,9 +321,6 @@
     // Find the thumbnail container to attach button
     const thumbnailContainer = findThumbnailContainer(item);
     if (!thumbnailContainer) return;
-
-    // Mark as processed
-    processedThumbnails.add(item);
 
     // Create and add the button container
     const buttonContainer = createSummarizeButton(videoId);
@@ -404,6 +396,20 @@
     console.log('[YT Gemini] Initialized - click Summarize to open Gemini in new tab');
     scanForThumbnails();
     setupObserver();
+
+    // Listen for YouTube SPA navigation
+    window.addEventListener('yt-navigate-finish', () => {
+      console.log('[YT Gemini] Navigation detected, rescanning...');
+      // Clear processed set on navigation to allow re-injection
+      // (elements may be recycled/recreated)
+      setTimeout(scanForThumbnails, 500);
+    });
+
+    // Also listen for popstate (back/forward)
+    window.addEventListener('popstate', () => {
+      console.log('[YT Gemini] Popstate detected, rescanning...');
+      setTimeout(scanForThumbnails, 500);
+    });
   }
 
   // Run when DOM is ready

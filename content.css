@@ -1,4 +1,4 @@
-/* Button Container - always visible */
+/* Button Container - always visible, above YouTube overlays */
 .yt-gemini-btn-container {
   position: absolute !important;
   top: 8px !important;
@@ -8,6 +8,18 @@
   pointer-events: all !important;
   display: block !important;
   transform: translateZ(0) !important;
+}
+
+/* Keep button visible during YouTube hover states */
+ytd-thumbnail:hover .yt-gemini-btn-container,
+ytd-video-renderer:hover .yt-gemini-btn-container,
+ytd-rich-item-renderer:hover .yt-gemini-btn-container,
+#hover-overlays ~ .yt-gemini-btn-container,
+#mouseover-overlay ~ .yt-gemini-btn-container {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  z-index: 9999 !important;
 }
 
 /* Summarize Button */

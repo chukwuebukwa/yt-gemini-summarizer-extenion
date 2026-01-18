@@ -158,7 +158,7 @@ If the title is clickbait (a question or provocative statement designed to get c
 
     const button = document.createElement('button');
     button.className = 'yt-gemini-summarize-btn';
-    button.textContent = 'Summarize';
+    button.innerHTML = `<span class="yt-gemini-icon">✦</span><span class="yt-gemini-text">Summarize</span>`;
     button.setAttribute('data-video-id', videoId);
 
     button.addEventListener('click', (e) => {

@@ -2,7 +2,7 @@
 .yt-gemini-btn-container {
   position: absolute !important;
   top: 8px !important;
-  right: 8px !important;
+  left: 8px !important;
   z-index: 9999 !important;
   opacity: 1 !important;
   pointer-events: all !important;
@@ -24,7 +24,7 @@ ytd-rich-item-renderer:hover .yt-gemini-btn-container,
 
 /* Summarize Button */
 .yt-gemini-summarize-btn {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: rgba(0, 0, 0, 0.8);
   color: white;
   border: none;
   border-radius: 8px;
@@ -67,8 +67,8 @@ ytd-rich-item-renderer:hover .yt-gemini-btn-container,
   border-radius: 8px;
   padding: 0 12px;
   height: 32px;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .yt-gemini-summarize-btn:hover .yt-gemini-icon {

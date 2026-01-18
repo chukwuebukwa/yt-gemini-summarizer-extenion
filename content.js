@@ -65,17 +65,62 @@
     return null;
   }
 
-  // Build prompt for video
-  function buildPrompt(videoId) {
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    return `${videoUrl}
+  // Default settings
+  const DEFAULT_SETTINGS = {
+    clickbaitCheck: true,
+    bulletPoints: false,
+    keepShort: false,
+    customPrompt: ''
+  };
 
-If the title is clickbait (a question or provocative statement designed to get clicks), first give a direct 1-2 sentence answer to that question. Then summarize the video.`;
+  // Get settings from storage
+  async function getSettings() {
+    try {
+      const result = await chrome.storage.sync.get('settings');
+      return { ...DEFAULT_SETTINGS, ...result.settings };
+    } catch (e) {
+      return DEFAULT_SETTINGS;
+    }
+  }
+
+  // Build prompt for video based on settings
+  async function buildPrompt(videoId) {
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    const settings = await getSettings();
+
+    let prompt = videoUrl + '\n\n';
+
+    // Add modifiers based on settings
+    const instructions = [];
+
+    if (settings.clickbaitCheck) {
+      instructions.push('If the title is clickbait (a question or provocative statement designed to get clicks), first give a direct 1-2 sentence answer to that question.');
+    }
+
+    if (settings.bulletPoints) {
+      instructions.push('Format the summary as bullet points.');
+    }
+
+    if (settings.keepShort) {
+      instructions.push('Keep the summary brief (3-5 sentences max).');
+    }
+
+    if (instructions.length > 0) {
+      prompt += instructions.join(' ') + '\n\n';
+    }
+
+    prompt += 'Summarize this video.';
+
+    if (settings.customPrompt) {
+      prompt += '\n\n' + settings.customPrompt;
+    }
+
+    return prompt;
   }
 
   // Open Gemini in new tab with prompt in URL hash
-  function openInNewTab(videoId) {
-    const prompt = buildPrompt(videoId);
+  async function openInNewTab(videoId) {
+    const prompt = await buildPrompt(videoId);
     const geminiUrl = `${GEMINI_BASE_URL}#yt-summarize=${encodeURIComponent(prompt)}`;
     window.open(geminiUrl, '_blank', 'noopener,noreferrer');
   }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <div class="header">
+      <span class="icon">✦</span>
+      <h1>YT Summarizer</h1>
+    </div>
+
+    <div class="section">
+      <h2>Quick Toggles</h2>
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="clickbait-check" checked>
+          <span class="toggle-label">Clickbait check</span>
+          <span class="toggle-desc">Answer clickbait questions first</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="bullet-points">
+          <span class="toggle-label">Bullet points</span>
+          <span class="toggle-desc">Format summary as bullet points</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="keep-short">
+          <span class="toggle-label">Keep it short</span>
+          <span class="toggle-desc">Limit to 3-5 sentences</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Custom Instructions</h2>
+      <textarea id="custom-prompt" placeholder="Add any custom instructions here..."></textarea>
+      <p class="hint">The YouTube URL is always included automatically.</p>
+    </div>
+
+    <div class="section">
+      <button id="save-btn" class="save-btn">Save Settings</button>
+      <span id="save-status" class="save-status"></span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
